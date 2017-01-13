@@ -1,2 +1,2 @@
 
-Copyright (C) 2017 labcat
+Copyright (C) 2017 Zachary Ma

@@ -1,157 +1,110 @@
-//
-   Created by zachary on 2017/1/13.
-
 doctype html
-html(lang='en')
+html
     head
         title AppCat | 绿欣燕信
-        script(type='text/javascript').
-            foo = true;
-            bar = function () {};
-            if (foo) {
-                bar(1 + 5)
-            }
-    body
-        html(lang='en')
-            head
-                meta(charset='utf-8')
-                meta(http-equiv='X-UA-Compatible', content='IE=edge')
-                meta(name='viewport', content='width=device-width, initial-scale=1')
-                meta(name='description', content='')
-                meta(name='author', content='')
-                link(rel='icon', href='../../favicon.ico')
-                title Theme Template for Bootstrap
-                // Bootstrap core CSS
-                link(href='stylesheets/bootstrap.min.css', rel='stylesheet')
-                // Bootstrap theme
-                link(href='stylesheets/bootstrap-theme.min.css', rel='stylesheet')
-                // Custom styles for this template
-                link(href='stylesheets/theme.css', rel='stylesheet')
-                // Just for debugging purposes. Don't actually copy these 2 lines!
-                //if lt IE 9
-                  script(src='../../assets/js/ie8-responsive-file-warning.js')
-                // HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
-                //if lt IE 9
-                  script(src='http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js')
-                  script(src='http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js')
-            body(role='document')
-                // Fixed navbar
-                nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
-                    .container
-                        .navbar-header
-                            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
-                                span.sr-only Toggle navigation
-                                span.icon-bar
-                                span.icon-bar
-                                span.icon-bar
-                            a.navbar-brand(href='#') AppCat 应用标注
-                        #navbar.navbar-collapse.collapse
-                            ul.nav.navbar-nav
-                                li.active
-                                    a(href='#') 主页
-                                li
-                                    a(href='http://radar.pkuos.org/appcat.html' target="_blank") 分类查看
 
-                        // /.nav-collapse
-                .container.theme-showcase(role='main')
-                    // Main jumbotron for a primary marketing message or call to action
-                    .jumbotron
-                        h1 你好，橙子!
-                        p
-                        p
-                            | 这是一个应用类别标注网站
-                        p 首先填上你的名字，然后点击一个Pack就可以进行标注了
-                        input.form-control(type='name', placeholder='你的名字', required='', autofocus='')
-                    .page-header
-                        h1 Packs
-                    p
-                        button.btn.btn-lg.btn-success(type='button') 00
-                        button.btn.btn-lg.btn-success(type='button') 01
-                        button.btn.btn-lg.btn-success(type='button') 02
-                        button.btn.btn-lg.btn-success(type='button') 03
-                        button.btn.btn-lg.btn-success(type='button') 04
-                        button.btn.btn-lg.btn-success(type='button') 05
-                        button.btn.btn-lg.btn-success(type='button') 06
-                        button.btn.btn-lg.btn-success(type='button') 07
-                        button.btn.btn-lg.btn-success(type='button') 08
-                        button.btn.btn-lg.btn-success(type='button') 09
-                        button.btn.btn-lg.btn-success(type='button') 00
-                        button.btn.btn-lg.btn-success(type='button') 01
-                        button.btn.btn-lg.btn-success(type='button') 02
-                        button.btn.btn-lg.btn-success(type='button') 03
-                        button.btn.btn-lg.btn-success(type='button') 04
-                        button.btn.btn-lg.btn-success(type='button') 05
-                        button.btn.btn-lg.btn-success(type='button') 06
-                        button.btn.btn-lg.btn-success(type='button') 07
-                        button.btn.btn-lg.btn-success(type='button') 08
-                        button.btn.btn-lg.btn-success(type='button') 09
-                        button.btn.btn-lg.btn-success(type='button') 00
-                        button.btn.btn-lg.btn-success(type='button') 01
-                        button.btn.btn-lg.btn-success(type='button') 02
-                        button.btn.btn-lg.btn-success(type='button') 03
-                        button.btn.btn-lg.btn-success(type='button') 04
-                        button.btn.btn-lg.btn-success(type='button') 05
-                        button.btn.btn-lg.btn-success(type='button') 06
-                        button.btn.btn-lg.btn-success(type='button') 07
-                        button.btn.btn-lg.btn-success(type='button') 08
-                        button.btn.btn-lg.btn-success(type='button') 09
-                        button.btn.btn-lg.btn-success(type='button') 00
-                        button.btn.btn-lg.btn-success(type='button') 01
-                        button.btn.btn-lg.btn-success(type='button') 02
-                        button.btn.btn-lg.btn-success(type='button') 03
-                        button.btn.btn-lg.btn-success(type='button') 04
-                        button.btn.btn-lg.btn-success(type='button') 05
-                        button.btn.btn-lg.btn-success(type='button') 03
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        link(rel='icon', href='../../favicon.ico')
+        title Theme Template for Bootstrap
+        // Bootstrap core CSS
+        link(href='stylesheets/bootstrap.min.css', rel='stylesheet')
+        // Bootstrap theme
+        link(href='stylesheets/bootstrap-theme.min.css', rel='stylesheet')
+        // Custom styles for this template
+        link(href='stylesheets/theme.css', rel='stylesheet')
+        script(src='//cdn.bootcss.com/jquery/3.1.1/jquery.js')
+        script.
+            var tag_pack = function(pack_id) {
+                alert("Tag Pack: " + pack_id);
+            };
+    body(role='document')
+        // Fixed navbar
+        nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+            .container
+                .navbar-header
+                    button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+                        span.sr-only Toggle navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                    a.navbar-brand(href='#') AppCat 应用标注
+                #navbar.navbar-collapse.collapse
+                    ul.nav.navbar-nav
+                        li.active
+                            a(href='#') 主页
+                        li
+                            a(href='http://radar.pkuos.org/appcat.html' target="_blank") 分类查看
+
+                // /.nav-collapse
+        .container.theme-showcase(role='main')
+            // Main jumbotron for a primary marketing message or call to action
+            .jumbotron
+                h1 你好，橙子!
+                p
+                p
+                    | 这是一个应用类别标注网站
+                p 首先填上你的名字，然后点击一个Pack就可以进行标注了
+                p
+                    input.form-control(type='name', placeholder='你的名字', required='', autofocus='')
+                    input.form-control(type='secret', placeholder='Secret String', required='', autofocus='')
+            .page-header
+                h1 Packs
+            .buttons
+                each pack in packs
+                    button.btn.btn-lg(class=pack.status, pack_id=pack.pack_id, onclick="tag_pack(" + pack.pack_id + ")") #{pack.pack_id}
+            hr
+            footer.footer
+                .container
+                    .row.footer-top
+                        .col-sm-6.col-lg-6
+                            h4
+                                img(src='http://radar.pkuos.org/radar.png')
+                            p
+                                | 此处应该有
+                                a(href='http://www.bootcss.com/') 橙子
+                                | ，但是暂时logo还没有设计出来，所以暂时就随便找个图片冒充了，网站是
+                                a(href='http://zablog.me/', target='_blank') 子昂
+                                | 做的，谢谢。
+                        .col-sm-6.col-lg-5.col-lg-offset-1
+                            .row.about
+                                .col-xs-3
+                                    h4 关于
+                                    ul.list-unstyled
+                                        li
+                                            a(href='/about/') 关于我们
+                                        li
+                                            a(href='/ad/') 广告合作
+                                        li
+                                            a(href='/links/') 友情链接
+                                        li
+                                            a(href='/hr/') 招聘事项
+                                .col-xs-3
+                                    h4 联系方式
+                                    ul.list-unstyled
+                                        li
+                                            a(href='http://weibo.com/bootcss', title='Bootstrap中文网官方微博', target='_blank') 无
+                                        li
+                                            a(href='mailto:admin@bootcss.com') 无
+                                .col-xs-3
+                                    h4 旗下网站
+                                    ul.list-unstyled
+                                        li
+                                            a(href='http://www.golaravel.com/', target='_blank') 无
+                                        li
+                                            a(href='http://www.ghostchina.com/', target='_blank') 无
+                                .col-xs-3
+                                    h4 赞助商
+                                    ul.list-unstyled
+                                        li
+                                            a(href='http://www.ucloud.cn/', target='_blank') 无
+                                        li
+                                            a(href='https://www.upyun.com', target='_blank') 无
                     hr
-                    footer.footer
-                        .container
-                            .row.footer-top
-                                .col-sm-6.col-lg-6
-                                    h4
-                                        img(src='http://radar.pkuos.org/radar.png')
-                                    p
-                                        | 此处应该有
-                                        a(href='http://www.bootcss.com/') 橙子
-                                        | ，但是暂时logo还没有设计出来，所以暂时就随便找个图片冒充了，网站是
-                                        a(href='http://zablog.me/', target='_blank') 子昂
-                                        | 做的，谢谢。
-                                .col-sm-6.col-lg-5.col-lg-offset-1
-                                    .row.about
-                                        .col-xs-3
-                                            h4 关于
-                                            ul.list-unstyled
-                                                li
-                                                    a(href='/about/') 关于我们
-                                                li
-                                                    a(href='/ad/') 广告合作
-                                                li
-                                                    a(href='/links/') 友情链接
-                                                li
-                                                    a(href='/hr/') 招聘事项
-                                        .col-xs-3
-                                            h4 联系方式
-                                            ul.list-unstyled
-                                                li
-                                                    a(href='http://weibo.com/bootcss', title='Bootstrap中文网官方微博', target='_blank') 无
-                                                li
-                                                    a(href='mailto:admin@bootcss.com') 无
-                                        .col-xs-3
-                                            h4 旗下网站
-                                            ul.list-unstyled
-                                                li
-                                                    a(href='http://www.golaravel.com/', target='_blank') 无
-                                                li
-                                                    a(href='http://www.ghostchina.com/', target='_blank') 无
-                                        .col-xs-3
-                                            h4 赞助商
-                                            ul.list-unstyled
-                                                li
-                                                    a(href='http://www.ucloud.cn/', target='_blank') 无
-                                                li
-                                                    a(href='https://www.upyun.com', target='_blank') 无
-                            hr
-                            .row.footer-bottom
-                                ul.list-inline.text-center
-                                    li
-                                        a(href='http://www.miibeian.gov.cn/', target='_blank') 京ICP备11007151号
-                                    li 京公网安备11010802014953
+                    .row.footer-bottom
+                        ul.list-inline.text-center
+                            li
+                                a(href='http://www.miibeian.gov.cn/', target='_blank') 京ICP备11007151号
+                            li 京公网安备11010802014953

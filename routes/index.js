@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
                     }
                     packs[doc]["pack_id"] = docs[doc]["pack_id"];
                 }
-                console.log(packs)
+                // console.log(packs)
                 res.render('index', { title: 'Express', packs: packs });
             } else {
                 console.log("Not Found");
@@ -40,8 +40,21 @@ router.get('/', function(req, res, next) {
     });
 });
 
+router.get('/packing', function(req, res, next) {
+    var pack_id = req.query.pack_id;
+    var name = req.query.name;
+    var secret = req.query.secret;
+    if (secret == undefined || secret.toUpperCase() != "YANXIN2017") {
+        res.render('wrong_sec', {name: name, secret: secret, app_id: start});
+        return;
+    }
+    console.log("name + " + name);
+    var start = parseInt(pack_id) * 500;
+    res.render('packing', {name: name, secret: secret, app_id: start});
+});
+
 router.get('/tagging', function(req, res, next) {
-    res.render('tagging', { title: 'Express' });
+   res.render('tagging');
 });
 
 router.get('/template', function(req, res, next) {

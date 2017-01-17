@@ -1,4 +1,7 @@
+# WebStorm
 .idea*
+
+# Storage for png files.
 public/WdjData*
 
 # Logs

@@ -4,7 +4,7 @@
 doctype html
 html(lang='en')
     head
-        title AppCat 标注中
+        title AppCat 标注： #{app_info.app_id}
         script(src='//cdn.bootcss.com/jquery/3.1.1/jquery.js')
         script(type='text/javascript').
             function GetRequest() {
@@ -75,7 +75,7 @@ html(lang='en')
                         li.active
                             a(href='/') 主页
                         li
-                            a(href='http://radar.pkuos.org/appcat.html' target="_blank") 分类查看
+                            a(href='/appcat.html' target="_blank") 分类查看
 
                 // /.nav-collapse
         .container.theme-showcase(role='main')
@@ -84,7 +84,7 @@ html(lang='en')
                 h2 应用#{app_info.app_id}：#{app_info.app_name}
                 div
                     img(width='256px', height='256px', src='WdjData/#{app_info.png}')
-                    iframe(align=right, height="360px",width="760px",src="http://radar.pkuos.org/appcat.html")
+                    iframe(align=right, height="360px",width="760px",src="appcat.html")
                 p
                     | 包名： #{app_info.package_name}
 

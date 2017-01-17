@@ -103,6 +103,7 @@ router.get('/tagging', function(req, res, next) {
                 app_info['png'] = docs[0].png;
                 app_info['description'] = docs[0].description;
                 app_info['app_id'] = docs[0].app_id;
+                app_info['official_category'] = docs[0].official_categories;
                 console.log(app_info);
                 res.render('tagging', {app_info: app_info});
             } else {
@@ -116,6 +117,43 @@ router.get('/tagging', function(req, res, next) {
         findDocuments(db);
     });
 });
+
+router.get('/insert', function(req, res, next) {
+    var app_id = req.query.app_id;
+    var name = req.query.name;
+    var secret = req.query.secret;
+    var cate_res =  req.query.res;
+    var insertDocuments = function(db) {
+        var collection = db.collection('apps');
+        collection.find({"app_id":app_id}).toArray(function(err, docs) {
+            if (!err) {
+                if (docs[0].author1 == "") {
+                    collection.update({"app_id": app_id}, {$set: {"author1" : name, "cate1": cate_res}});
+                } else if (docs[0].author2 == ""){
+                    collection.update({"app_id": app_id}, {$set: {"author2" : name, "cate2": cate_res}});
+                } else {
+                    collection.update({"app_id": app_id}, {$set: {"author3" : name, "cate3": cate_res}});
+                }
+            } else {
+                console.log("Error, Not found.");
+            }
+        });
+    };
+    MongoClient.connect(url, function (err, db) {
+        assert.equal(null, err);
+        console.log("Database Connected correctly.");
+        insertDocuments(db);
+    });
+    if (parseInt(app_id) + 1 == 23402 || (parseInt(app_id) + 1) % 500 == 0){
+        res.render('wrong_sec', {error_str: "你已经完成了一个pack，退出或者返回主页。"});
+    } else {
+        res.render('insert', {
+            next_id: (parseInt(app_id) + 1).toString(),
+            name: name,
+            secret: secret
+        });
+    }
+})
 
 router.get('/template', function(req, res, next) {
     res.render('template', { title: 'Express' });

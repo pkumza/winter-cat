@@ -32,12 +32,7 @@ html(lang='en')
                 var secret = Request['secret'];
                 var res = $("#cate_res")[0].value;
                 var url = "/insert?app_id=" + app_id + "&name=" + name + "&secret=" + secret + "&res=" + res;
-                alert(url);
-                return;
-                var name = $("#yourname")[0].value;
-                var secret = $("#yoursecret")[0].value;
-                var url = "/packing";
-                window.location = url + "?pack_id=" + pack_id + "&name=" + name + "&secret=" + secret;
+                window.location = url;
             };
         meta(charset='utf-8')
         meta(http-equiv='X-UA-Compatible', content='IE=edge')
@@ -85,6 +80,7 @@ html(lang='en')
                 div
                     img(width='256px', height='256px', src='WdjData/#{app_info.png}')
                     iframe(align=right, height="360px",width="760px",src="appcat.html")
+                p 豌豆荚分类： #{app_info.official_category}
                 p
                     | 包名： #{app_info.package_name}
 

@@ -8,12 +8,10 @@ var url = 'mongodb://localhost:27017/appcat';
 router.get('/', function(req, res, next) {
     var findDocuments = function(db) {
         var collection = db.collection('packs');
-        console.log(collection.find().count());
-        var counts = "";
         collection.find().toArray(function(err, docs){
             if (!err) {
-                packs = new Array()
-                for(doc in docs){
+                var packs = new Array()
+                for(var doc in docs){
                     // console.log(docs[doc]);
                     if (docs[doc]["author1"] == '') {
                         packs[doc] = {"status":"btn-primary"};
@@ -22,7 +20,7 @@ router.get('/', function(req, res, next) {
                     } else if (docs[doc]["author3"] == ''){
                         packs[doc] = {"status":"btn-warning"};
                     } else {
-                        packs[doc] = {"status":"btn-error"};
+                        packs[doc] = {"status":"btn-danger"};
                     }
                     packs[doc]["pack_id"] = docs[doc]["pack_id"];
                 }
@@ -35,7 +33,7 @@ router.get('/', function(req, res, next) {
     }
     MongoClient.connect(url, function (err, db) {
         assert.equal(null, err);
-        console.log("Connected correctly to server");
+        console.log("Database Connected correctly.");
         findDocuments(db);
     });
 });
@@ -45,16 +43,78 @@ router.get('/packing', function(req, res, next) {
     var name = req.query.name;
     var secret = req.query.secret;
     if (secret == undefined || secret.toUpperCase() != "YANXIN2017") {
-        res.render('wrong_sec', {name: name, secret: secret, app_id: start});
+        res.render('wrong_sec', {error_str: "抱歉，您没有权限。"});
         return;
     }
+
+    var update_author = function(db) {
+        var collection = db.collection('packs');
+        collection.find({"pack_id": pack_id}).toArray(function(err, docs){
+            if (err) {
+                console.log("No data.");
+                return;
+            } else {
+                console.log("DOCS");
+                console.log(docs);
+                if (docs[0].author1 == "") {
+                    collection.update({"pack_id": pack_id},{$set:{"author1": name}});
+                    // docs[0].author1 = name;
+                } else if (docs[0].author2 == "") {
+                    collection.update({"pack_id": pack_id},{$set:{"author2": name}});
+                } else if (docs[0].author3 == "") {
+                    collection.update({"pack_id": pack_id},{$set:{"author3": name}});
+                } else {
+                    collection.update({"pack_id": pack_id},{$set:{"author3": name}});
+                    console.log("Too many author" + name + " pack: " + pack_id);
+                }
+            }
+        })
+    }
+    MongoClient.connect(url, function (err, db) {
+        assert.equal(null, err);
+        console.log("Database Connected correctly.");
+        update_author(db);
+    });
     console.log("name + " + name);
     var start = parseInt(pack_id) * 500;
     res.render('packing', {name: name, secret: secret, app_id: start});
 });
 
 router.get('/tagging', function(req, res, next) {
-   res.render('tagging');
+    var app_id = req.query.app_id;
+    var name = req.query.name;
+    var secret = req.query.secret;
+    if (secret == undefined || secret.toUpperCase() != "YANXIN2017") {
+        res.render('wrong_sec', {error_str: "抱歉，您没有权限。"});
+        return;
+    }
+    var findDocuments = function(db) {
+        var collection = db.collection('apps');
+        collection.find({"app_id":app_id}).toArray(function(err, docs) {
+            if (!err) {
+                var app_info = new Array();
+                if (docs[0] == undefined) {
+                    res.render("wrong_sec", {error_str: "抱歉，没找到相应的应用信息。"});
+                    return;
+                }
+                app_info['app_name'] = docs[0].app_name;
+                app_info['package_name'] = docs[0].package_name;
+                app_info['tags'] = docs[0].tags;
+                app_info['png'] = docs[0].png;
+                app_info['description'] = docs[0].description;
+                app_info['app_id'] = docs[0].app_id;
+                console.log(app_info);
+                res.render('tagging', {app_info: app_info});
+            } else {
+                console.log("Error, Not found.");
+            }
+        });
+    };
+    MongoClient.connect(url, function (err, db) {
+        assert.equal(null, err);
+        console.log("Database Connected correctly.");
+        findDocuments(db);
+    });
 });
 
 router.get('/template', function(req, res, next) {

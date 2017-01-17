@@ -5,118 +5,147 @@ doctype html
 html(lang='en')
     head
         title AppCat 标注中
+        script(src='//cdn.bootcss.com/jquery/3.1.1/jquery.js')
         script(type='text/javascript').
-            foo = true;
-            bar = function () {};
-            if (foo) {
-                bar(1 + 5)
+            function GetRequest() {
+                var url = location.search; //获取url中"?"符后的字串
+                var theRequest = new Object();
+                if (url.indexOf("?") != -1) {
+                    var str = url.substr(1);
+                    if (str.indexOf("&") != -1) {
+                        var strs = str.split("&");
+                        for (var i = 0; i < strs.length; i++) {
+                            theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+                        }
+                    } else {
+                        theRequest[str.split("=")[0]] = decodeURI(str.split("=")[1]);
+                    }
+                }
+                return theRequest;
             }
-    body
-        html(lang='en')
-            head
-                meta(charset='utf-8')
-                meta(http-equiv='X-UA-Compatible', content='IE=edge')
-                meta(name='viewport', content='width=device-width, initial-scale=1')
-                meta(name='description', content='')
-                meta(name='author', content='')
-                link(rel='icon', href='../../favicon.ico')
-                title Theme Template for Bootstrap
-                // Bootstrap core CSS
-                link(href='stylesheets/bootstrap.min.css', rel='stylesheet')
-                // Bootstrap theme
-                link(href='stylesheets/bootstrap-theme.min.css', rel='stylesheet')
-                // Custom styles for this template
-                link(href='stylesheets/theme.css', rel='stylesheet')
-                // Just for debugging purposes. Don't actually copy these 2 lines!
-                //if lt IE 9
-                  script(src='../../assets/js/ie8-responsive-file-warning.js')
-                // HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
-                //if lt IE 9
-                  script(src='http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js')
-                  script(src='http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js')
-            body(role='document')
-                // Fixed navbar
-                nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
-                    .container
-                        .navbar-header
-                            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
-                                span.sr-only Toggle navigation
-                                span.icon-bar
-                                span.icon-bar
-                                span.icon-bar
-                            a.navbar-brand(href='#') AppCat 应用标注
-                        #navbar.navbar-collapse.collapse
-                            ul.nav.navbar-nav
-                                li.active
-                                    a(href='/') 主页
-                                li
-                                    a(href='http://radar.pkuos.org/appcat.html' target="_blank") 分类查看
 
-                        // /.nav-collapse
-                .container.theme-showcase(role='main')
-                    // Main jumbotron for a primary marketing message or call to action
-                    .jumbotron
-                        h1 非死不可 | com.facebook.app
-                        p
-                            img(src='http://radar.pkuos.org/radar.png')
-                        p
-                            | 描述描述以
-                        p 我是一堆描述
-                        input.form-control(type='name', placeholder='分类编号', required='', autofocus='')
-                        p &nbsp;
-                        p
-                            a.btn.btn-primary.btn-lg(href='#', role='button') 下一个
+            var tag_app = function() {
+                var Request = new Object();
+                Request = GetRequest();
+                var name = Request['name'];
+                var app_id = Request['app_id'];
+                var secret = Request['secret'];
+                var res = $("#cate_res")[0].value;
+                var url = "/insert?app_id=" + app_id + "&name=" + name + "&secret=" + secret + "&res=" + res;
+                alert(url);
+                return;
+                var name = $("#yourname")[0].value;
+                var secret = $("#yoursecret")[0].value;
+                var url = "/packing";
+                window.location = url + "?pack_id=" + pack_id + "&name=" + name + "&secret=" + secret;
+            };
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        link(rel='icon', href='../../favicon.ico')
+        title Theme Template for Bootstrap
+        // Bootstrap core CSS
+        link(href='stylesheets/bootstrap.min.css', rel='stylesheet')
+        // Bootstrap theme
+        link(href='stylesheets/bootstrap-theme.min.css', rel='stylesheet')
+        // Custom styles for this template
+        link(href='stylesheets/theme.css', rel='stylesheet')
+        // Just for debugging purposes. Don't actually copy these 2 lines!
+        //if lt IE 9
+          script(src='../../assets/js/ie8-responsive-file-warning.js')
+        // HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+        //if lt IE 9
+          script(src='http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js')
+          script(src='http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js')
+    body(role='document')
+        // Fixed navbar
+        nav.navbar.navbar-inverse.navbar-fixed-top(role='navigation')
+            .container
+                .navbar-header
+                    button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+                        span.sr-only Toggle navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                    a.navbar-brand(href='#') AppCat 应用标注
+                #navbar.navbar-collapse.collapse
+                    ul.nav.navbar-nav
+                        li.active
+                            a(href='/') 主页
+                        li
+                            a(href='http://radar.pkuos.org/appcat.html' target="_blank") 分类查看
 
+                // /.nav-collapse
+        .container.theme-showcase(role='main')
+            // Main jumbotron for a primary marketing message or call to action
+            .jumbotron
+                h2 应用#{app_info.app_id}：#{app_info.app_name}
+                div
+                    img(width='256px', height='256px', src='WdjData/#{app_info.png}')
+                    iframe(align=right, height="360px",width="760px",src="http://radar.pkuos.org/appcat.html")
+                p
+                    | 包名： #{app_info.package_name}
+
+                p 描述：
+                pre #{app_info.description}
+                p 分类： （多个分类请用英文字母分号;间隔）
+                input.form-control#cate_res(type='name', placeholder='分类编号', required='')
+                p &nbsp;
+                p
+                    a.btn.btn-primary.btn-lg#btn-next(role='button', onclick="tag_app()") 下一个
+
+            hr
+            footer.footer
+                .container
+                    .row.footer-top
+                        .col-sm-6.col-lg-6
+                            h4
+                                img(src='/WdjData/[%E4%BC%91%E9%97%B2%E6%97%B6%E9%97%B4]com.brainandbrain.burlymenatsea.png')
+                            p
+                                | 此处应该有
+                                a(href='http://www.bootcss.com/') 橙子
+                                | ，但是暂时logo还没有设计出来，所以暂时就随便找个图片冒充了，网站是
+                                a(href='http://zablog.me/', target='_blank') 子昂
+                                | 做的，谢谢。
+                        .col-sm-6.col-lg-5.col-lg-offset-1
+                            .row.about
+                                .col-xs-3
+                                    h4 关于
+                                    ul.list-unstyled
+                                        li
+                                            a(href='/about/') 关于我们
+                                        li
+                                            a(href='/ad/') 广告合作
+                                        li
+                                            a(href='/links/') 友情链接
+                                        li
+                                            a(href='/hr/') 招聘事项
+                                .col-xs-3
+                                    h4 联系方式
+                                    ul.list-unstyled
+                                        li
+                                            a(href='http://weibo.com/bootcss', title='Bootstrap中文网官方微博', target='_blank') 无
+                                        li
+                                            a(href='mailto:admin@bootcss.com') 无
+                                .col-xs-3
+                                    h4 旗下网站
+                                    ul.list-unstyled
+                                        li
+                                            a(href='http://www.golaravel.com/', target='_blank') 无
+                                        li
+                                            a(href='http://www.ghostchina.com/', target='_blank') 无
+                                .col-xs-3
+                                    h4 赞助商
+                                    ul.list-unstyled
+                                        li
+                                            a(href='http://www.ucloud.cn/', target='_blank') 无
+                                        li
+                                            a(href='https://www.upyun.com', target='_blank') 无
                     hr
-                    footer.footer
-                        .container
-                            .row.footer-top
-                                .col-sm-6.col-lg-6
-                                    h4
-                                        img(src='http://radar.pkuos.org/radar.png')
-                                    p
-                                        | 此处应该有
-                                        a(href='http://www.bootcss.com/') 橙子
-                                        | ，但是暂时logo还没有设计出来，所以暂时就随便找个图片冒充了，网站是
-                                        a(href='http://zablog.me/', target='_blank') 子昂
-                                        | 做的，谢谢。
-                                .col-sm-6.col-lg-5.col-lg-offset-1
-                                    .row.about
-                                        .col-xs-3
-                                            h4 关于
-                                            ul.list-unstyled
-                                                li
-                                                    a(href='/about/') 关于我们
-                                                li
-                                                    a(href='/ad/') 广告合作
-                                                li
-                                                    a(href='/links/') 友情链接
-                                                li
-                                                    a(href='/hr/') 招聘事项
-                                        .col-xs-3
-                                            h4 联系方式
-                                            ul.list-unstyled
-                                                li
-                                                    a(href='http://weibo.com/bootcss', title='Bootstrap中文网官方微博', target='_blank') 无
-                                                li
-                                                    a(href='mailto:admin@bootcss.com') 无
-                                        .col-xs-3
-                                            h4 旗下网站
-                                            ul.list-unstyled
-                                                li
-                                                    a(href='http://www.golaravel.com/', target='_blank') 无
-                                                li
-                                                    a(href='http://www.ghostchina.com/', target='_blank') 无
-                                        .col-xs-3
-                                            h4 赞助商
-                                            ul.list-unstyled
-                                                li
-                                                    a(href='http://www.ucloud.cn/', target='_blank') 无
-                                                li
-                                                    a(href='https://www.upyun.com', target='_blank') 无
-                            hr
-                            .row.footer-bottom
-                                ul.list-inline.text-center
-                                    li
-                                        a(href='http://www.miibeian.gov.cn/', target='_blank') 京ICP备11007151号
-                                    li 京公网安备11010802014953
+                    .row.footer-bottom
+                        ul.list-inline.text-center
+                            li
+                                a(href='http://www.miibeian.gov.cn/', target='_blank') 京ICP备11007151号
+                            li 京公网安备11010802014953

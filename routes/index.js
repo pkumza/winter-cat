@@ -159,4 +159,8 @@ router.get('/template', function(req, res, next) {
     res.render('template', { title: 'Express' });
 });
 
+router.get('/guide', function(req, res, next) {
+    res.render('guide');
+})
+
 module.exports = router;

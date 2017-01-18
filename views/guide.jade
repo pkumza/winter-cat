@@ -1,39 +1,14 @@
 //
+   Created by zach on 2017/1/18.
+
+//
    Created by zachary on 2017/1/13.
 
 doctype html
 html(lang='en')
     head
-        title AppCat 标注： #{app_info.app_id}
+        title AppCat 标注指南
         script(src='//cdn.bootcss.com/jquery/3.1.1/jquery.js')
-        script(type='text/javascript').
-            function GetRequest() {
-                var url = location.search; //获取url中"?"符后的字串
-                var theRequest = new Object();
-                if (url.indexOf("?") != -1) {
-                    var str = url.substr(1);
-                    if (str.indexOf("&") != -1) {
-                        var strs = str.split("&");
-                        for (var i = 0; i < strs.length; i++) {
-                            theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
-                        }
-                    } else {
-                        theRequest[str.split("=")[0]] = decodeURI(str.split("=")[1]);
-                    }
-                }
-                return theRequest;
-            }
-
-            var tag_app = function() {
-                var Request = new Object();
-                Request = GetRequest();
-                var name = Request['name'];
-                var app_id = Request['app_id'];
-                var secret = Request['secret'];
-                var res = $("#cate_res")[0].value;
-                var url = "/insert?app_id=" + app_id + "&name=" + name + "&secret=" + secret + "&res=" + res;
-                window.location = url;
-            };
         meta(charset='utf-8')
         meta(http-equiv='X-UA-Compatible', content='IE=edge')
         meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -78,21 +53,40 @@ html(lang='en')
         .container.theme-showcase(role='main')
             // Main jumbotron for a primary marketing message or call to action
             .jumbotron
-                h2 应用#{app_info.app_id}：#{app_info.app_name}
-                div
-                    img(width='256px', height='256px', src='WdjData/#{app_info.png}')
-                    iframe(align=right, height="360px",width="760px",src="appcat.html")
-                p 豌豆荚分类： #{app_info.official_category}
+                h2 应用标注指南
+                hr
                 p
-                    | 包名： #{app_info.package_name}
+                    | Step 1: 登陆主页&nbsp;
+                    a(href="http://yx.pkuos.org:3000") http://yx.pkuos.org:3000
+                p
+                    | Step 2: 填写你的名字，和secret string（群里告诉你）。
+                p
+                    | Step 3: 点击一个pack号，开始标注。
+                p
+                    | step 4: 查看应用信息，确定分类号，填写到分类框中。
+                    | 例：遇"应用宝"，填写000302
+                p
+                    | Step 5: 点击下一步。重复Step 4和Step 5
+                p
+                    | Step 6: 标满500个应用后，页面提示完成一个pack。退出或返回主页。
+                br
+                h2 分类更新指南
+                hr
+                p
+                    | 如果你需要添加新的分类，请遵循此指南。
+                p 应用分类信息发布于
+                    a(href="https://github.com/pkumza/AppCat/blob/master/category.json") https://github.com/pkumza/AppCat/blob/master/category.json
+                h3 方法1：
+                p 1: fork https://github.com/pkumza/AppCat
+                p 2: commit your changes
+                p 3: make a new pull request
+                h3 方法2:
+                p 1: git clone https://github.com/pkumza/AppCat
+                p 2: 联系我把相关账号加入到collaborators
+                p 3: commit and push
+                h3 方法3:
+                p 直接联系我
 
-                p 描述：
-                pre #{app_info.description}
-                p 分类： （多个分类请用英文字母分号;间隔）
-                input.form-control#cate_res(type='name', placeholder='分类编号', required='')
-                p &nbsp;
-                p
-                    a.btn.btn-primary.btn-lg#btn-next(role='button', onclick="tag_app()") 下一个
 
             hr
             footer.footer

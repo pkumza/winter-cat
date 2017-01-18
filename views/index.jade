@@ -14,7 +14,7 @@ html
         link(href='stylesheets/bootstrap-theme.min.css', rel='stylesheet')
         // Custom styles for this template
         link(href='stylesheets/theme.css', rel='stylesheet')
-        script(src='//cdn.bootcss.com/jquery/3.1.1/jquery.js')
+        script(src='javascripts/jquery.js')
         script.
             // redirect to tag page.
             var tag_pack = function(pack_id) {
@@ -51,7 +51,8 @@ html
                 h1 你好，橙子!
                 p
                 p
-                    | 这是一个应用类别标注网站，有47个packs(0~46)。蓝色代表无人标注，绿色代表1人标注，橙色代表已完成。
+                    | 这是一个应用类别标注网站，有47个packs(0~46)。
+                p 蓝色代表无人标注，绿色代表1人标注，橙色代表已完成，灰色代表标注中。
                 p 首先填上你的名字，然后点击一个Pack就可以进行标注了。
                 form.form-inline
                     .form-grou

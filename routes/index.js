@@ -12,8 +12,10 @@ router.get('/', function(req, res, next) {
             if (!err) {
                 var packs = new Array()
                 for(var doc in docs){
-                    // console.log(docs[doc]);
-                    if (docs[doc]["author1"] == '') {
+                    var a = docs[doc]["mutex"];
+                    if (a != undefined && a != "") {
+                        packs[doc] = {"status":"btn-grey"};
+                    } else if (docs[doc]["author1"] == '') {
                         packs[doc] = {"status":"btn-primary"};
                     } else if (docs[doc]["author2"] == ''){
                         packs[doc] = {"status":"btn-success"};
@@ -47,33 +49,25 @@ router.get('/packing', function(req, res, next) {
         return;
     }
 
-    var update_author = function(db) {
+    var mutex_author = function(db) {
         var collection = db.collection('packs');
         collection.find({"pack_id": pack_id}).toArray(function(err, docs){
             if (err) {
                 console.log("No data.");
                 return;
             } else {
-                console.log("DOCS");
-                console.log(docs);
-                if (docs[0].author1 == "") {
-                    collection.update({"pack_id": pack_id},{$set:{"author1": name}});
-                    // docs[0].author1 = name;
-                } else if (docs[0].author2 == "") {
-                    collection.update({"pack_id": pack_id},{$set:{"author2": name}});
-                } else if (docs[0].author3 == "") {
-                    collection.update({"pack_id": pack_id},{$set:{"author3": name}});
-                } else {
-                    collection.update({"pack_id": pack_id},{$set:{"author3": name}});
-                    console.log("Too many author" + name + " pack: " + pack_id);
-                }
+                collection.updateOne({"pack_id": pack_id}, {$set:{"mutex": "Yes"}}, {safe:true}, function(err, result){
+                    console.log("updateOne Result: " + result);
+                    return;
+                });
+
             }
         })
     }
     MongoClient.connect(url, function (err, db) {
         assert.equal(null, err);
         console.log("Database Connected correctly.");
-        update_author(db);
+        mutex_author(db);
     });
     console.log("name + " + name);
     var start = parseInt(pack_id) * 500;
@@ -145,6 +139,37 @@ router.get('/insert', function(req, res, next) {
         insertDocuments(db);
     });
     if (parseInt(app_id) + 1 == 23402 || (parseInt(app_id) + 1) % 500 == 0){
+        var pack_id = parseInt(app_id / 500).toString()
+        if (pack_id.length == 1) {
+            pack_id = "0" + pack_id;
+        }
+        var update_author = function(db) {
+            var collection = db.collection('packs');
+            collection.find({"pack_id": pack_id}).toArray(function(err, docs){
+                if (err) {
+                    console.log("No data.");
+                    return;
+                } else {
+                    console.log("DOCS");
+                    console.log(docs);
+                    if (docs[0].author1 == "") {
+                        collection.updateOne({"pack_id": pack_id},{$set:{"author1": name, "mutex": ""}});
+                    } else if (docs[0].author2 == "") {
+                        collection.updateOne({"pack_id": pack_id},{$set:{"author2": name, "mutex": ""}});
+                    } else if (docs[0].author3 == "") {
+                        collection.updateOne({"pack_id": pack_id},{$set:{"author3": name, "mutex": ""}});
+                    } else {
+                        collection.updateOne({"pack_id": pack_id},{$set:{"author3": name, "mutex": ""}});
+                        console.log("Too many author" + name + " pack: " + pack_id);
+                    }
+                }
+            })
+        }
+        MongoClient.connect(url, function (err, db) {
+            assert.equal(null, err);
+            console.log("Database Connected correctly.");
+            update_author(db);
+        });
         res.render('wrong_sec', {error_str: "你已经完成了一个pack，退出或者返回主页。"});
     } else {
         res.render('insert', {

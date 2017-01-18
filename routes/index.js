@@ -133,11 +133,16 @@ router.get('/insert', function(req, res, next) {
             }
         });
     };
-    MongoClient.connect(url, function (err, db) {
-        assert.equal(null, err);
-        console.log("Database Connected correctly.");
-        insertDocuments(db);
-    });
+    // 当用户不输入分类的话，那么直接跳过，不写入数据库。
+    if (cate_res == undefined || cate_res == "") {
+        console.log(" " + name + " Passed" + app_id);
+    } else {
+        MongoClient.connect(url, function (err, db) {
+            assert.equal(null, err);
+            console.log("Database Connected correctly.");
+            insertDocuments(db);
+        });
+    }
     if (parseInt(app_id) + 1 == 23402 || (parseInt(app_id) + 1) % 500 == 0){
         var pack_id = parseInt(app_id / 500).toString()
         if (pack_id.length == 1) {
